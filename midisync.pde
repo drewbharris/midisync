@@ -1,12 +1,12 @@
 byte incomingByte;
 byte controller;
 byte value;
-int output_1 = 3
-int output_2 = 5
-int output_3 = 6
-int output_4 = 9
-int output_5 = 10
-int output_6 = 11
+int output_1 = 3;
+int output_2 = 5;
+int output_3 = 6;
+int output_4 = 9;
+int output_5 = 10;
+int output_6 = 11;
 int statusLed = 13;
 int action=2; 
 
@@ -52,19 +52,19 @@ void writeLights(byte controller, byte value){
   {
     analogWrite(output_2, value*2);
   }
-  else if (controller == 37)
+  else if (controller == 38)
   {
     analogWrite(output_3, value*2);
   }
-  else if (controller == 37)
+  else if (controller == 39)
   {
     analogWrite(output_4, value*2);
   }
-  else if (controller == 37)
+  else if (controller == 40)
   {
     analogWrite(output_5, value*2);
   }
-  else if (controller == 37)
+  else if (controller == 41)
   {
     analogWrite(output_6, value*2);
   }
