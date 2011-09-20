@@ -1,27 +1,23 @@
-
-
 byte incomingByte;
-byte note;
-byte velocity;
+byte controller;
+byte value;
+int output_1 = 3
+int output_2 = 5
+int output_3 = 6
+int output_4 = 9
+int output_5 = 10
+int output_6 = 11
+int statusLed = 13;
+int action=2; 
 
-
-int statusLed = 13;   // select the pin for the LED
-
-int action=2; //0 =note off ; 1=note on ; 2= nada
-
-
-//setup: declaring iputs and outputs and begin serial
 void setup() {
   pinMode(statusLed,OUTPUT);   // declare the LED's pin as output
-  pinMode(2,OUTPUT);
   pinMode(3,OUTPUT);
-  pinMode(4,OUTPUT);
-
-  pinMode(7,OUTPUT);
-  pinMode(8,OUTPUT);
+  pinMode(5,OUTPUT);
+  pinMode(6,OUTPUT);
   pinMode(9,OUTPUT);
-  
-  //start serial with midi baudrate 31250 or 38400 for debugging
+  pinMode(10,OUTPUT);
+  pinMode(11,OUTPUT);
   Serial.begin(31250);        
   digitalWrite(statusLed,HIGH);  
 }
@@ -29,55 +25,48 @@ void setup() {
 //loop: wait for serial data, and interpret the message
 void loop () {
   if (Serial.available() > 0) {
-    // read the incoming byte:
     incomingByte = Serial.read();
-
-    // wait for as status-byte, channel 1, note on or off
-    if (incomingByte== 176){ // note on message starting starting
+    if (incomingByte== 176){ // CONTROL CHANGE
       action=1;
-    }else if (incomingByte== 128){ // note off message starting
-      action=0;
-    }else if (incomingByte== 208){ // aftertouch message starting
-       //not implemented yet
-    }else if (incomingByte== 160){ // polypressure message starting
-       //not implemented yet
-    }else if ( (action==0)&&(note==0) ){ // if we received a "note off", we wait for which note (databyte)
-      note=incomingByte;
-      playNote(note, 0);
-      note=0;
-      velocity=0;
-      action=2;
-    }else if ( (action==1)&&(note==0) ){ // if we received a "note on", we wait for the note (databyte)
-      note=incomingByte;
-    }else if ( (action==1)&&(note!=0) ){ // ...and then the velocity
-      velocity=incomingByte;
-      playNote(note, velocity);
-      note=0;
-      velocity=0;
+    }
+    else if ( (action==1)&&(controller==0) ){ // if recieve a control change, wait for which controller
+      controller=incomingByte;
+    }else if ( (action==1)&&(controller!=0) ){ // wait for value
+      value=incomingByte;
+      writeLights(controller, value);
+      controller=0;
+      value=0;
       action=0;
     }else{
-      //nada
     }
   }
 }
 
-void blink(){
-  digitalWrite(statusLed, HIGH);
-  delay(100);
-  digitalWrite(statusLed, LOW);
-  delay(100);
-}
+void writeLights(byte controller, byte value){
 
-
-void playNote(byte note, byte velocity){
-
-  if (note == 36)
+  if (controller == 36)
   {
-   analogWrite(6, velocity*2);
+   analogWrite(output_1, value*2);
   }
-  if (note == 37)
+  else if (controller == 37)
   {
-    analogWrite(5, velocity*2);
+    analogWrite(output_2, value*2);
+  }
+  else if (controller == 37)
+  {
+    analogWrite(output_3, value*2);
+  }
+  else if (controller == 37)
+  {
+    analogWrite(output_4, value*2);
+  }
+  else if (controller == 37)
+  {
+    analogWrite(output_5, value*2);
+  }
+  else if (controller == 37)
+  {
+    analogWrite(output_6, value*2);
   }
    
 
