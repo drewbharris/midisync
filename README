@@ -1,0 +1,14 @@
+MIDISYNC by Drew Harris and Nathan Willson
+
+Drives LED arrays from PWM outputs on arduino.
+Pin mapping:
+digital pin 3 - > MIDI CC 36
+digital pin 5 -> MIDI CC 37
+digital pin 6 - > MIDI CC 38
+digital pin 9 -> MIDI CC 39
+digital pin 10 -> MIDI CC 40
+digital pin 11 -> MIDI CC 41
+
+TODO:
+test mode
+override MIDI mode - light arrays on/off
